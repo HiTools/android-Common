@@ -1,0 +1,75 @@
+<!--
+  Copyright (C) 2015  Haiyang Yu Android Source Project
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  -->
+
+<resources>
+
+    <style name="AppBaseTheme" parent="Theme.NoActionBar">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <!--  TopBar 的style -->
+        <item name="topBarStyle">@style/AppTheme.Widget.TopBar</item>
+        <item name="editTextProStyle">@style/AppTheme.Widget.EditTextPro</item>
+        <item name="textViewProStyle">@style/AppTheme.Widget.TextViewPro</item>
+    </style>
+
+
+    <!-- 现在App的Theme -->
+    <style name="AppTheme" parent="AppBaseTheme">
+        <item name="android:overScrollMode">never</item>
+    </style>
+
+    <!-- Splash界面 -->
+    <style name="AppTheme.Splash" parent="Theme.NoActionBar.Fullscreen">
+        <item name="android:windowBackground">@drawable/splash</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+    </style>
+
+    <!-- 登录界面 -->
+    <style name="AppTheme.Login">
+        <item name="colorPrimaryDark">@null</item>
+        <item name="android:windowBackground">@android:color/white</item>
+    </style>
+
+    <style name="AppTheme.Guide" parent="Theme.NoActionBar.Fullscreen" />
+
+    <style name="FullScreenTheme" parent="Theme.NoActionBar">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:statusBarColor">@color/transparent</item>
+    </style>
+
+    <style name="AppTheme.Widget" />
+
+    <style name="AppTheme.Widget.TopBar">
+        <item name="android:fitsSystemWindows">true</item>
+        <item name="android:background">@color/color_accent</item>
+        <item name="textSize">18sp</item>
+        <item name="textColor">@color/white</item>
+        <item name="leftImage">@drawable/svg_top_back_white</item>
+    </style>
+
+
+    <style name="AppTheme.Widget.TextViewPro" />
+
+    <style name="AppTheme.Widget.EditTextPro">
+        <item name="leftTextColor">@color/text_grey</item>
+        <item name="leftTextSize">@dimen/J_title</item>
+    </style>
+
+
+</resources>

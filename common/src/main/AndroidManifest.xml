@@ -1,0 +1,66 @@
+<!--
+  ~ Copyright (C) 2016 The yuhaiyang Android Source Project
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="dev.hitools.common">
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application>
+        <!-- Android 7.0 Uri的共享机制-->
+        <provider
+            android:name=".app.provider.CommonFileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_provider_configure" />
+        </provider>
+
+        <provider
+            android:name=".app.provider.InitProvider"
+            android:authorities="${applicationId}.initprovider"
+            android:exported="false"
+            android:initOrder="800" />
+
+        <!--选择图片的类-->
+        <activity
+            android:name=".modules.image.select.ImageSelectorActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.NoActionBar" />
+
+        <!--剪切图片的类-->
+        <activity
+            android:name=".modules.image.cutter.PhotoCutterActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.NoActionBar.Fullscreen" />
+
+        <!--请求权限的Activity-->
+        <activity
+            android:name=".utils.permission.RequestPermissionActivity"
+            android:theme="@style/Theme.NoActionBar.Transparent" />
+
+    </application>
+
+</manifest>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  Copyright (C) 2016 The yuhaiyang Android Source Project
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  -->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="dev.hitools.noah.modules.account.login.LoginViewModel" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/root"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="110dp" />
+
+        <dev.hitools.common.widget.edittext.EditTextPro
+            android:id="@+id/account"
+            style="@style/AppEditTextPro.Account.Login"
+            app:inputHint="@string/login_hint_account"
+            app:inputText="@{vm.phoneNumber}"
+            app:inputType="phone"
+            app:leftText="@string/login_account_tip" />
+
+        <dev.hitools.common.widget.edittext.EditTextPro
+            android:id="@+id/password"
+            style="@style/AppEditTextPro.Account.Login"
+            app:inputHint="@{vm.passwordHint}"
+            app:inputTextMaxLength="@integer/max_password"
+            app:inputType="textPassword"
+            app:leftText="@string/login_password_tip"
+            app:rightImage="@drawable/ic_password_visibility"
+            app:rightImageAction="setPasswordVisibility"
+            app:rightImageVisibility="visible" />
+
+        <Button
+            android:id="@+id/login"
+            style="@style/AppButton.Login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:onClick="onViewClick"
+            android:text="@string/login" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/register"
+                style="@style/AppTextView.Login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginStart="20dp"
+                android:onClick="onViewClick"
+                android:text="@string/register_account" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/forgotPassword"
+                style="@style/AppTextView.Login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="30dp"
+                android:onClick="onViewClick"
+                android:text="@string/login_forget_password" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+</layout>

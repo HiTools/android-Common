@@ -1,0 +1,262 @@
+<!--
+  ~ Copyright (C) 2016 The yuhaiyang Android Source Project
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<resources>
+
+    <!-- ****************动画*****************-->
+    <style name="Animation" />
+
+    <style name="Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/right_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/right_out</item>
+        <item name="android:activityCloseEnterAnimation">@anim/left_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/left_out</item>
+    </style>
+
+    <style name="Animation.Activity.Bottom">
+        <item name="android:activityOpenEnterAnimation">@anim/bottom_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/bottom_out</item>
+        <item name="android:activityCloseEnterAnimation">@anim/bottom_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/bottom_out</item>
+    </style>
+
+    <style name="Animation.Activity.Alpha">
+        <item name="android:activityOpenEnterAnimation">@anim/alpha_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/alpha_out</item>
+        <item name="android:activityCloseEnterAnimation">@anim/alpha_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/alpha_out</item>
+    </style>
+
+    <style name="Animation.Windows" />
+
+    <style name="Animation.Windows.Bottom">
+        <item name="android:windowEnterAnimation">@anim/bottom_in</item>
+        <item name="android:windowExitAnimation">@anim/bottom_out</item>
+    </style>
+
+    <style name="Animation.Windows.Alpha">
+        <item name="android:windowEnterAnimation">@anim/alpha_in</item>
+        <item name="android:windowExitAnimation">@anim/alpha_out</item>
+    </style>
+
+    <!-- ****************Dialog区域*****************-->
+    <style name="BaseDialog">
+        <item name="dialogMainLayout">@layout/dialog</item>
+        <item name="dialogListLayout">@layout/dialog_select</item>
+        <item name="dialogListItem">@layout/dialog_select_item</item>
+        <item name="fromBottom">false</item>
+        <item name="widthProportion">0.85</item>
+    </style>
+
+    <!-- 从底部弹出的-->
+    <style name="BaseDialog.Bottom">
+        <item name="dialogMainLayout">@layout/dialog_bottom</item>
+        <item name="fromBottom">true</item>
+        <item name="widthProportion">1.0</item>
+    </style>
+
+    <style name="BaseDialog.Bottom2">
+        <item name="dialogMainLayout">@layout/dialog_bottom_2</item>
+        <item name="fromBottom">true</item>
+        <item name="widthProportion">1.0</item>
+    </style>
+
+    <style name="BaseDialogTitle">
+        <item name="android:scrollHorizontally">true</item>
+        <item name="android:gravity">center</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:textSize">@dimen/H_title</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/text_grey</item>
+    </style>
+
+    <style name="BaseDialogMessage">
+        <item name="android:paddingLeft">20dp</item>
+        <item name="android:paddingRight">20dp</item>
+        <item name="android:paddingBottom">20dp</item>
+        <item name="android:minHeight">70dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/H_title</item>
+        <item name="android:textColor">@color/text_grey</item>
+    </style>
+
+    <style name="BaseDialogButton">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:minHeight">@dimen/default_button_height</item>
+        <item name="android:textSize">@dimen/H_title</item>
+        <item name="android:textColor">@color/blue_400</item>
+        <item name="leftBackground">@drawable/base_dialog_button_left</item>
+        <item name="rightBackground">@drawable/base_dialog_button_right</item>
+        <item name="wholeBackground">@drawable/base_dialog_button_whole</item>
+        <item name="lineColor">@color/line</item>
+    </style>
+
+    <style name="BaseDialogButton.Bottom">
+        <item name="leftBackground">@drawable/base_dialog_bg</item>
+        <item name="rightBackground">@drawable/base_dialog_bg</item>
+        <item name="wholeBackground">@drawable/base_dialog_bg</item>
+    </style>
+
+    <style name="Line" />
+    <!--横线-->
+    <style name="Line.Horizontal">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1px</item>
+        <item name="android:background">@color/line</item>
+    </style>
+
+    <!--横线有padding-->
+    <style name="Line.Horizontal.Padding">
+        <item name="android:background">@color/windows_background_light</item>
+        <item name="android:src">@color/line</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:contentDescription">@null</item>
+    </style>
+    <!--竖线-->
+    <style name="Line.Vertical">
+        <item name="android:layout_width">1px</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@color/line</item>
+    </style>
+    <!--竖线有padding-->
+    <style name="Line.Vertical.Padding">
+        <item name="android:background">@color/windows_background_light</item>
+        <item name="android:src">@color/line</item>
+        <item name="android:scaleType">fitXY</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:contentDescription">@null</item>
+    </style>
+
+    <!-- ToolBar 的样式 -->
+    <style name="ToolBar" />
+
+    <style name="ToolBar.Title">
+        <item name="android:textSize">@dimen/top_bar_title_text_size</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="ToolBar.SubTitle">
+        <item name="android:textSize">@dimen/top_bar_sub_title_text_size</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <!-- TopBar 默认样式统一样式 -->
+    <style name="TopBar">
+        <item name="textSize">@dimen/top_bar_title_text_size</item>
+        <item name="textColor">@color/top_bar_text_color</item>
+        <item name="subTextSize">@dimen/top_bar_sub_title_text_size</item>
+        <item name="subTextColor">@color/top_bar_text_color</item>
+        <item name="android:background">@color/color_primary</item>
+        <item name="textStyle">normal</item>
+    </style>
+
+    <!-- Button 默认样式统一样式 -->
+    <style name="CommonButton" parent="@style/Widget.AppCompat.Button.Borderless" />
+
+    <!-- TextView 默认样式统一样式 -->
+    <style name="CommonTextView" parent="@android:style/Widget.DeviceDefault.TextView" />
+
+    <!-- 图片选择器-->
+    <style name="CommonTextView.PhotoSelector" />
+
+    <style name="CommonTextView.PhotoSelector.TimeLine">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:alpha">0</item>
+        <item name="android:background">@color/grey_alpha_0_7</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:paddingBottom">4dp</item>
+        <item name="android:textColor">#DDFFFFFF</item>
+        <item name="android:textSize">@dimen/J_title</item>
+    </style>
+
+
+    <!-- EditText 默认样式统一样式 -->
+    <style name="CommonEditText" parent="Widget.AppCompat.EditText" />
+
+
+    <style name="CommonPickerView" />
+
+    <style name="CommonPickerView.DateTimePicker">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="StatusView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@android:color/white</item>
+    </style>
+
+    <style name="StatusView.Weight">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@android:color/white</item>
+        <item name="android:alpha">0</item>
+    </style>
+
+    <style name="Default" />
+
+    <style name="Default.StatusView">
+        <!--
+        <item name="loadingImage" />
+        <item name="loadingText" />
+        -->
+        <item name="loadingTextSize">@dimen/status_view_title_size</item>
+        <item name="loadingTextColor">@color/status_view_title_color</item>
+
+        <item name="errorText">@string/load_data_failed</item>
+        <item name="errorTextSize">@dimen/status_view_title_size</item>
+        <item name="errorTextColor">@color/status_view_title_color</item>
+
+        <item name="errorSubText">@string/load_data_failed_tip</item>
+        <item name="errorSubTextSize">@dimen/status_view_sub_title_size</item>
+        <item name="errorSubTextColor">@color/status_view_sub_title_color</item>
+        <item name="errorImage">@drawable/svg_status_error</item>
+
+        <item name="emptyText">@string/nothing</item>
+        <item name="emptyTextSize">@dimen/status_view_title_size</item>
+        <item name="emptyTextColor">@color/status_view_title_color</item>
+        <!--<item name="emptySubText" />-->
+        <item name="emptySubTextSize">@dimen/status_view_sub_title_size</item>
+        <item name="emptySubTextColor">@color/status_view_sub_title_color</item>
+        <item name="emptyImage">@drawable/svg_status_empty</item>
+
+        <item name="reloadText">@string/reload_data</item>
+        <item name="reloadTextSize">@dimen/status_view_reload_size</item>
+        <item name="reloadTextColor">@color/status_view_reload_color</item>
+        <item name="reloadBackground">@drawable/corner_max_grey_line_white_bg</item>
+        <item name="interruptTouchEvent">true</item>
+    </style>
+
+    <style name="CommonCheckBox" parent="@android:style/Widget.Material.CompoundButton.CheckBox" />
+
+    <style name="CommonCheckBox.PreviewPhoto">
+        <item name="android:colorControlActivated">@color/white</item>
+        <item name="android:colorControlNormal">@color/white</item>
+    </style>
+
+</resources>

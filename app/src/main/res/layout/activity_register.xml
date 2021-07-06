@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="dev.hitools.noah.modules.account.register.RegisterViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <dev.hitools.common.widget.TopBar
+            android:id="@+id/topBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:text="@string/register_title" />
+
+        <dev.hitools.common.widget.edittext.EditTextPro
+            android:id="@+id/phone"
+            style="@style/AppEditTextPro.Account.Register"
+            android:inputType="phone"
+            app:inputHint="@string/register_hint_phone"
+            app:inputTextMaxLength="11"
+            app:leftText="@string/register_tip_phone" />
+
+
+        <dev.hitools.common.widget.edittext.EditTextPro
+            android:id="@+id/verifyCode"
+            style="@style/AppEditTextPro.Account.Register"
+            app:cancelEnable="false"
+            app:customizeViewId="@id/sendVerifyCode"
+            app:inputHint="@string/register_hint_verify_code"
+            app:leftText="@string/register_tip_verify_code">
+
+            <dev.hitools.common.widget.VerifyCodeButton
+                android:id="@+id/sendVerifyCode"
+                style="@style/VerifyCodeButton"
+                android:onClick="onViewClick"
+                app:timingText="@string/register_timing_text" />
+        </dev.hitools.common.widget.edittext.EditTextPro>
+
+        <dev.hitools.common.widget.edittext.EditTextPro
+            android:id="@+id/password"
+            style="@style/AppEditTextPro.Account.Register"
+            app:inputHint="@string/register_hint_password"
+            app:inputTextMaxLength="@integer/max_password"
+            app:inputType="textPassword"
+            app:leftText="@string/register_tip_password"
+            app:rightImage="@drawable/ic_password_visibility"
+            app:rightImageAction="setPasswordVisibility"
+            app:rightImageVisibility="visible" />
+
+        <dev.hitools.common.widget.edittext.EditTextPro
+            android:id="@+id/ensurePassword"
+            style="@style/AppEditTextPro.Account.Register"
+            app:inputHint="@string/register_hint_ensure_password"
+            app:inputTextMaxLength="@integer/max_password"
+            app:inputType="textPassword"
+            app:leftText="@string/register_tip_ensure_password"
+            app:rightImage="@drawable/ic_password_visibility"
+            app:rightImageAction="setPasswordVisibility"
+            app:rightImageVisibility="visible" />
+
+        <Button
+            android:id="@+id/submit"
+            style="@style/AppButton.Submit"
+            android:onClick="onViewClick"
+            android:text="@string/register" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/default_item_height"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/check"
+                style="@style/AppCheckBox.Agreement" />
+
+            <TextView
+                style="@style/AppTextView.Agreement.Header"
+                android:text="@string/agree" />
+
+            <TextView
+                android:id="@+id/agreement"
+                style="@style/AppTextView.Agreement.Content"
+                android:onClick="onViewClick"
+                android:text="@string/register_agreement" />
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>

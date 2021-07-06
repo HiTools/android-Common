@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (C) 2016 The yuhaiyang Android Source Project
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="photo"
+            type="dev.hitools.common.entries.Image" />
+
+        <variable
+            name="position"
+            type="Integer" />
+
+        <variable
+            name="vm"
+            type="dev.hitools.common.modules.image.select.ImageSelectorViewModel" />
+
+        <variable
+            name="fragment"
+            type="dev.hitools.common.modules.image.select.ImageListFragment" />
+    </data>
+
+    <dev.hitools.common.widget.framelayout.ScaleFrameLayout
+        android:id="@+id/root"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="@{()->fragment.previewPhoto(position)}"
+        app:heightScale="1"
+        app:widthScale="1">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            imageUrl="@{photo.uri}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:actualImageScaleType="focusCrop"
+            app:placeholderImage="@color/grey_alpha_0_5"
+            app:viewAspectRatio="1" />
+
+        <View
+            android:id="@+id/mask"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/grey_alpha_0_6"
+            android:visibility="@{photo.selected?View.VISIBLE:View.INVISIBLE}" />
+
+        <FrameLayout
+            android:id="@+id/statusContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|end"
+            android:minWidth="40dp"
+            android:minHeight="40dp"
+            android:onClick="@{()->vm.selectImage(photo,status, mask)}">
+
+            <CheckBox
+                android:id="@+id/status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|end"
+                android:checked="@{photo.selected}"
+                android:clickable="false"
+                android:scaleX="0.8"
+                android:scaleY="0.8" />
+        </FrameLayout>
+    </dev.hitools.common.widget.framelayout.ScaleFrameLayout>
+</layout>

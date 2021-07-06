@@ -1,0 +1,218 @@
+/*
+ * Copyright (C) 2015  Haiyang Yu Android Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion build_versions.compile_sdk
+    buildToolsVersion build_versions.build_tools
+
+    defaultConfig {
+        // 注意这里只是设置了appId的前缀 在buildTypes里面有设置后缀
+        applicationId APPLICATION_ID
+        minSdkVersion build_versions.min_sdk
+        targetSdkVersion build_versions.target_sdk
+
+        versionCode generateVersionCode() as int
+        versionName VERSION_NAME
+
+        // 增加一个编译版本的时间
+        buildConfigField "long", "RELEASE_TIME", System.currentTimeMillis() + "L"
+
+        // 配置 含有的版本类型
+        buildConfigField "int", "VERSION_DEV", VERSION_DEV
+        buildConfigField "int", "VERSION_SIT", VERSION_SIT
+        buildConfigField "int", "VERSION_UAT", VERSION_UAT
+        buildConfigField "int", "VERSION_PROD", VERSION_PROD
+        // 配置默认版本-为开发版本
+        buildConfigField "int", "VERSION_TYPE", VERSION_DEV
+        buildConfigField "String", "VERSION_DESCRIPTION", "\"开发版本\""
+
+        // 配置语言信息
+        resConfig "zh"
+        // NDK 加载lib的文件夹
+        ndk {
+            abiFilters "armeabi-v7a", "x86"
+        }
+    }
+
+    //签名
+    signingConfigs {
+        release {
+            storeFile file(RELEASE_STOREFILE)
+            storePassword RELEASE_STORE_PASSWORD
+            keyAlias RELEASE_KEY_ALIAS
+            keyPassword RELEASE_KEY_PASSWORD
+        }
+    }
+
+    productFlavors {
+        // TODO
+    }
+
+    buildTypes {
+
+        debug {
+            debuggable true
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+            
+            // AndroidManifest 中配置的文件
+            manifestPlaceholders = [
+                    // App的名字
+                    APP_NAME                : DEV_APP_NAME,
+                    // App的ICON
+                    APP_ICON                : DEV_APP_ICON,
+            ]
+
+            // 设置那个版本
+            buildConfigField "int", "VERSION_TYPE", VERSION_DEV
+            buildConfigField "String", "VERSION_DESCRIPTION", "\"开发版本\""
+        }
+
+
+        sit {
+            debuggable true
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+            // AndroidManifest 中配置的文件
+            manifestPlaceholders = [
+                    // App的名字
+                    APP_NAME                : SIT_APP_NAME,
+                    // App的ICON
+                    APP_ICON                : SIT_APP_ICON,
+            ]
+
+            // 设置那个版本
+            buildConfigField "int", "VERSION_TYPE", VERSION_SIT
+            buildConfigField "String", "VERSION_DESCRIPTION", "\"测试版本\""
+
+            matchingFallbacks = ['debug']
+        }
+
+
+        uat {
+            debuggable false
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+
+            // AndroidManifest 中配置的文件
+            manifestPlaceholders = [
+                    // App的名字
+                    APP_NAME                : UAT_APP_NAME,
+                    // App的ICON
+                    APP_ICON                : UAT_APP_ICON,
+            ]
+
+            // 设置那个版本
+            buildConfigField "int", "VERSION_TYPE", VERSION_UAT
+            buildConfigField "String", "VERSION_DESCRIPTION", "\"UAT版本\""
+
+            matchingFallbacks = ['release']
+        }
+
+        release {
+            debuggable false
+            minifyEnabled true
+            shrinkResources true
+
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+
+            // AndroidManifest 中配置的文件
+            manifestPlaceholders = [
+                    // App的名字
+                    APP_NAME                : PROD_APP_NAME,
+                    // App的ICON
+                    APP_ICON                : PROD_APP_ICON,
+            ]
+
+            // 设置那个版本
+            buildConfigField "int", "VERSION_TYPE", VERSION_PROD
+            buildConfigField "String", "VERSION_DESCRIPTION", "\"生产版本\""
+        }
+    }
+
+
+    dexOptions {
+        jumboMode true
+    }
+
+    sourceSets {
+        debug.setRoot('build-types/debug')
+        release.setRoot('build-types/release')
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+        // if true, only report errors
+        ignoreWarnings true
+    }
+
+    compileOptions {
+        // Flag to enable support for the new language APIs
+        coreLibraryDesugaringEnabled true
+
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
+    buildFeatures {
+        dataBinding = true
+        viewBinding = true
+    }
+
+    // 包名重命名，加上版本及日期
+    android.applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            renameAPK(android, variant, output)
+        }
+    }
+}
+
+dependencies {
+    coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:$versions.desugar"
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    // 基础库
+    implementation project(':common')
+
+    kapt "com.android.databinding:compiler:3.1.4"
+    kapt "androidx.room:room-compiler:$versions.androidx.room"
+
+    def camerax_version = "1.0.0-beta12"
+    implementation "androidx.camera:camera-core:${camerax_version}"
+    implementation "androidx.camera:camera-camera2:${camerax_version}"
+
+    implementation 'com.arialyy.aria:core:3.8.15'
+    kapt 'com.arialyy.aria:compiler:3.8.15'
+
+    def paging_version = "3.0.0-alpha09"
+    implementation "androidx.paging:paging-runtime-ktx:$paging_version"
+    testImplementation "androidx.paging:paging-common-ktx:$paging_version"
+
+    implementation "androidx.datastore:datastore:1.0.0-alpha05"
+    implementation "androidx.datastore:datastore-preferences:1.0.0-alpha05"
+}
+

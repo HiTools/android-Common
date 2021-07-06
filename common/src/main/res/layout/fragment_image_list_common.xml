@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (C) 2016 The yuhaiyang Android Source Project
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="dev.hitools.common.modules.image.select.ImageSelectorViewModel" />
+
+        <variable
+            name="fragment"
+            type="dev.hitools.common.modules.image.select.ImageListFragment" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="?android:actionBarSize"
+            android:layout_marginBottom="?android:actionBarSize"
+            android:overScrollMode="never"
+            android:padding="1dp"
+            app:items="@{vm.imageList}"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:notifyDataSetChanged="@{vm.imageListDataChanged}"
+            app:spanCount="4" />
+
+        <TextView
+            android:id="@+id/timeLine"
+            style="@style/CommonTextView.PhotoSelector.TimeLine"
+            android:layout_marginTop="?android:actionBarSize"
+            tools:text="2015年4月1日" />
+
+        <dev.hitools.common.widget.TopBar
+            android:id="@+id/topBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:leftImage="@drawable/svg_top_back"
+            app:leftImageVisibility="visible"
+            app:rightText="@{vm.topRightText}"
+            app:text="@string/select_photo_title"
+            app:textColor="@color/white" />
+
+        <LinearLayout
+            android:id="@+id/bottomBar"
+            android:layout_width="match_parent"
+            android:layout_height="?android:actionBarSize"
+            android:layout_gravity="bottom"
+            android:background="@drawable/top_line_white_normal_bg"
+            android:gravity="center_vertical">
+
+            <dev.hitools.common.widget.ImageTextView
+                android:id="@+id/folderView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="?android:selectableItemBackground"
+                android:onClick="@{()->fragment.onViewClick(folderView)}"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                app:image="@drawable/ic_photo_selector_folder"
+                app:padding="5dp"
+                app:position="left"
+                app:text="@string/all_photos"
+                app:textColor="@color/color_accent"
+                app:textSize="@dimen/I_title"
+                app:tint="@color/color_accent" />
+
+            <View
+                android:id="@+id/bottomLine"
+                style="@style/Line.Vertical"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/preview"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="10dp"
+                android:gravity="center"
+                android:onClick="@{()->fragment.onViewClick(preview)}"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:text="@{vm.previewText}"
+                android:textColor="@color/color_accent"
+                android:textSize="@dimen/I_title"
+                tools:text="预览（1）" />
+
+        </LinearLayout>
+    </FrameLayout>
+</layout>
