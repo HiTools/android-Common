@@ -18,6 +18,10 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
+// Upload MavenCentral Plugin
+apply plugin: 'com.vanniktech.maven.publish'
+
+
 android {
     compileSdkVersion build_versions.compile_sdk
 

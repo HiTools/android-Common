@@ -8,9 +8,12 @@ buildscript {
     }
 
     dependencies {
-        //  Android 默认的编译工具库插件
+        // Android 默认的编译工具库插件
         classpath 'com.android.tools.build:gradle:4.2.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin.sdk"
+
+        // Upload MavenCentral Plugin
+        classpath 'com.vanniktech:gradle-maven-publish-plugin:0.17.0'
     }
 }
 
@@ -26,6 +29,13 @@ allprojects {
     tasks.withType(Javadoc) {
         options.addStringOption('Xdoclint:none', '-quiet')
         options.addStringOption('encoding', 'UTF-8')
+    }
+
+    // Upload MavenCentral Plugin
+    plugins.withId("com.vanniktech.maven.publish") {
+        mavenPublish {
+            sonatypeHost = "S01"
+        }
     }
 }
 
