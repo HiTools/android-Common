@@ -6,7 +6,6 @@ import dev.hitools.common.adapter.BindAdapter
 import dev.hitools.noah.BR
 import dev.hitools.noah.R
 import dev.hitools.noah.databinding.FragmentSampleListBinding
-import dev.hitools.noah.databinding.TestAaaBinding
 import dev.hitools.noah.modules.base.mvvm.view.AppBindFragment
 import dev.hitools.noah.modules.base.mvvm.viewmodel.AppBaseViewModel
 import dev.hitools.noah.modules.sample.SampleManager

@@ -65,7 +65,7 @@ class LoadingWebView : WebView {
         mLoadingPaint.color = color
     }
 
-    override fun setWebChromeClient(client: WebChromeClient) {
+    override fun setWebChromeClient(client: WebChromeClient?) {
         mLoadingWebChromeClient.setRealWebChromeClient(client)
     }
 

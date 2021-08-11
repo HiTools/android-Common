@@ -32,7 +32,7 @@ import androidx.annotation.RequiresApi
 internal class LoadingWebChromeClient(private val mLoadingWebView: LoadingWebView) : WebChromeClient() {
     private var mRealWebChromeClient: WebChromeClient? = null
 
-    fun setRealWebChromeClient(chromeClient: WebChromeClient) {
+    fun setRealWebChromeClient(chromeClient: WebChromeClient?) {
         mRealWebChromeClient = chromeClient
     }
 

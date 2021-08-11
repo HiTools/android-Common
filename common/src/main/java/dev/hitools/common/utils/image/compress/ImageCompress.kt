@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
+import android.os.Build
 import android.os.Handler
 import android.os.Message
 import android.util.Log
@@ -32,17 +33,20 @@ import kotlin.math.min
  */
 class ImageCompress private constructor(builder: Builder) {
     private val context: Context
+
     /**
      * 图片列表
      */
     private val imageList: MutableList<ImageWrapper>
 
     private val resultList: Array<File?>
+
     /**
      * 图片过滤器的List
      */
     private val filterList: MutableList<ICompressFilter>?
     private val filterFunctionList: MutableList<((ImageInfo) -> Boolean)>?
+
     /**
      * 保存的路径
      */
@@ -52,14 +56,17 @@ class ImageCompress private constructor(builder: Builder) {
      * 图片压缩格式
      */
     private val compressFormat: Bitmap.CompressFormat
+
     /**
      * 图片的压缩质量
      */
     private val quality: Int
+
     /**
      * 最多多少个线程同时压缩
      */
     private val threadNumber: Int
+
     /**
      * 压缩图片的线程池
      */
@@ -255,10 +262,23 @@ class ImageCompress private constructor(builder: Builder) {
             if (!folder.exists()) {
                 folder.mkdirs()
             }
-            val suffix = when (compressFormat) {
-                Bitmap.CompressFormat.JPEG -> ".jpg"
-                Bitmap.CompressFormat.PNG -> ".png"
-                Bitmap.CompressFormat.WEBP -> ".webp"
+
+            val suffix = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                when (compressFormat) {
+                    Bitmap.CompressFormat.JPEG -> ".jpg"
+                    Bitmap.CompressFormat.PNG -> ".png"
+                    Bitmap.CompressFormat.WEBP -> ".webp"
+                    Bitmap.CompressFormat.WEBP_LOSSLESS -> ".webp"
+                    Bitmap.CompressFormat.WEBP_LOSSY -> ".webp"
+                    else -> throw IllegalStateException("error format : $compressFormat")
+                }
+            } else {
+                when (compressFormat) {
+                    Bitmap.CompressFormat.JPEG -> ".jpg"
+                    Bitmap.CompressFormat.PNG -> ".png"
+                    Bitmap.CompressFormat.WEBP -> ".webp"
+                    else -> throw IllegalStateException("error format : $compressFormat")
+                }
             }
 
             val name = when {
@@ -301,10 +321,22 @@ class ImageCompress private constructor(builder: Builder) {
         }
 
         private fun compressFormat2MimeType(): String {
-            return when (compressFormat) {
-                Bitmap.CompressFormat.JPEG -> MimeType.Image.JPEG
-                Bitmap.CompressFormat.PNG -> MimeType.Image.PNG
-                Bitmap.CompressFormat.WEBP -> MimeType.Image.WEBP
+            return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                when (compressFormat) {
+                    Bitmap.CompressFormat.JPEG -> MimeType.Image.JPEG
+                    Bitmap.CompressFormat.PNG -> MimeType.Image.PNG
+                    Bitmap.CompressFormat.WEBP,
+                    Bitmap.CompressFormat.WEBP_LOSSLESS,
+                    Bitmap.CompressFormat.WEBP_LOSSY -> MimeType.Image.WEBP
+                    else -> throw IllegalStateException("error format : $compressFormat")
+                }
+            } else {
+                when (compressFormat) {
+                    Bitmap.CompressFormat.JPEG -> MimeType.Image.JPEG
+                    Bitmap.CompressFormat.PNG -> MimeType.Image.PNG
+                    Bitmap.CompressFormat.WEBP -> MimeType.Image.WEBP
+                    else -> throw IllegalStateException("error format : $compressFormat")
+                }
             }
 
         }
@@ -313,6 +345,7 @@ class ImageCompress private constructor(builder: Builder) {
 
     companion object {
         private const val TAG = "Tsar"
+
         /**
          * 默认的的压缩图片质量
          */
@@ -332,27 +365,33 @@ class ImageCompress private constructor(builder: Builder) {
          * 图片列表
          */
         internal val imageList: MutableList<ImageWrapper> = mutableListOf()
+
         /**
          * 图片过滤器的List
          */
         internal var filterList: MutableList<ICompressFilter>? = null
         internal var filterFunctionList: MutableList<((ImageInfo) -> Boolean)>? = null
+
         /**
          * 保存的路径
          */
         internal var savePath: String? = null
+
         /**
          * 图片压缩格式
          */
         internal var compressFormat: Bitmap.CompressFormat = Bitmap.CompressFormat.JPEG
+
         /**
          * 图片的压缩质量
          */
         internal var quality: Int = DEFAULT_COMPRESS_QUALITY
+
         /**
          * 最多多少个线程同时压缩
          */
         internal var threadNumber: Int = 3
+
         /**
          * 压缩的监听
          */

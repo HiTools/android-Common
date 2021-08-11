@@ -65,7 +65,7 @@ open class OnlyWebActivity : BaseActivity() {
         webView = findViewById(R.id.webView)
         initWebView()
         webView?.webViewClient = getWebViewClient()
-        webView?.loadUrl(url)
+        url?.let { webView?.loadUrl(it) }
         webView?.setDownloadListener { url, _, _, _, _ ->
             val intent = Intent(Intent.ACTION_VIEW)
             intent.addCategory(Intent.CATEGORY_BROWSABLE)
@@ -129,7 +129,7 @@ open class OnlyWebActivity : BaseActivity() {
     }
 
     fun retry() {
-        webView?.loadUrl(url)
+        url?.let { webView?.loadUrl(it) }
     }
 
     override fun onBackPressed() {

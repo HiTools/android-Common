@@ -16,15 +16,16 @@
 package dev.hitools.common.utils.image
 
 import android.content.Context
-import android.graphics.*
+import android.graphics.Bitmap
 import android.graphics.Bitmap.Config
+import android.graphics.BitmapFactory
+import android.graphics.Canvas
 import android.media.ExifInterface
+import android.os.Build
 import android.os.Environment
 import android.util.Log
 import dev.hitools.common.extensions.rotate
 import dev.hitools.common.extensions.save
-import dev.hitools.common.utils.AppUtils
-import dev.hitools.common.utils.StringUtils
 import java.io.File
 import java.util.*
 
@@ -148,10 +149,22 @@ object ImageUtils {
         if (!folder.exists()) {
             folder.mkdirs()
         }
-        val suffix = when (format) {
-            Bitmap.CompressFormat.JPEG -> ".jpg"
-            Bitmap.CompressFormat.PNG -> ".png"
-            Bitmap.CompressFormat.WEBP -> ".webp"
+        val suffix = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            when (format) {
+                Bitmap.CompressFormat.JPEG -> ".jpg"
+                Bitmap.CompressFormat.PNG -> ".png"
+                Bitmap.CompressFormat.WEBP -> ".webp"
+                Bitmap.CompressFormat.WEBP_LOSSLESS -> ".webp"
+                Bitmap.CompressFormat.WEBP_LOSSY -> ".webp"
+                else-> throw IllegalStateException("error format : $format")
+            }
+        } else {
+            when (format) {
+                Bitmap.CompressFormat.JPEG -> ".jpg"
+                Bitmap.CompressFormat.PNG -> ".png"
+                Bitmap.CompressFormat.WEBP -> ".webp"
+                else-> throw IllegalStateException("error format : $format")
+            }
         }
 
         val name = UUID.randomUUID().toString().replace("-", "") + suffix
