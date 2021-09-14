@@ -1,8 +1,12 @@
 # Common库的混淆配置
 -keep class dev.hitools.common.entries.**{*;}
 # 生成的Binding文件不需要混淆
--keep class **.*Binding {*;}
--keep class **.*BindingImpl {*;}
+-keepclassmembernames class **.*Binding {
+    void setVm(*);
+}
+-keepclassmembernames class **.*BindingImpl {
+    void setVm(*);
+}
 
 -keepattributes Signature, InnerClasses, EnclosingMethod
 # Gson
