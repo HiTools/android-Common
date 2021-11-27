@@ -2,9 +2,11 @@ package dev.hitools.noah.modules.base.mvvm.view
 
 import android.app.Dialog
 import android.view.View
+import androidx.core.view.ViewCompat
 import androidx.databinding.ViewDataBinding
 import dev.hitools.common.app.mvvm.view.BindActivity
 import dev.hitools.common.extensions.fullWindow
+import dev.hitools.common.extensions.isLightStatusBars
 import dev.hitools.common.widget.watermark.WaterMarkView
 import dev.hitools.noah.App
 import dev.hitools.noah.manager.VersionManager
@@ -63,8 +65,7 @@ abstract class AppBindActivity<T : ViewDataBinding, VM : AppBaseViewModel> : Bin
 
     override fun resetStatusBar() {
         super.resetStatusBar()
-        val result = window.decorView.systemUiVisibility and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-        fullWindow(result != 0)
+        fullWindow()
     }
 
     /**

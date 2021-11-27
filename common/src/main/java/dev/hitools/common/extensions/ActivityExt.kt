@@ -6,16 +6,22 @@ import android.graphics.Color
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
+import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.viewbinding.ViewBinding
 import dev.hitools.common.R
+import dev.hitools.common.app.provider.InitProvider
 import dev.hitools.common.extensions.binding.ActivityBinding
+import kotlinx.coroutines.CoroutineScope
 
 /**
  * inflate 方便实现
@@ -105,34 +111,44 @@ fun AppCompatActivity.setStatusBarColor(@ColorInt color: Int) {
 
 /**
  * 全屏模式 设置一个Activity 为一个全屏模式
+ * @param navigationBar 是否同时隐藏 navigationBar
  */
-fun AppCompatActivity.fullWindow(light: Boolean = false) {
+fun AppCompatActivity.fullWindow(navigationBar: Boolean = true) {
     setStatusBarColor(Color.TRANSPARENT)
-    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-    val visibility =
-        if (light && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-        } else {
-            View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-        }
-    setSystemUiVisibility(visibility)
+
+    val control = ViewCompat.getWindowInsetsController(window.decorView) ?: return
+    if (navigationBar) {
+        control.hide(WindowInsetsCompat.Type.systemBars())
+    } else {
+        control.hide(WindowInsetsCompat.Type.statusBars())
+    }
 }
+
+/**
+ * 是否是浅色状态栏
+ */
+inline val AppCompatActivity.isLightStatusBars: Boolean
+    get() {
+        val control = ViewCompat.getWindowInsetsController(window.decorView) ?: return false
+        return control.isAppearanceLightStatusBars
+    }
+
 
 /**
  * 设置一个 Activity为普通模式
  */
-fun AppCompatActivity.normalWindow(color: Int? = null) {
+fun AppCompatActivity.normalWindow(color: Int? = null, navigationBar: Boolean = true) {
     val statusColor = color ?: findColor(R.color.color_accent)
     setStatusBarColor(statusColor)
-    setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE)
+
+    val control = ViewCompat.getWindowInsetsController(window.decorView) ?: return
+    if (navigationBar) {
+        control.show(WindowInsetsCompat.Type.systemBars())
+    } else {
+        control.show(WindowInsetsCompat.Type.statusBars())
+    }
 }
 
-/**
- * 设置状态栏是否显示
- */
-fun AppCompatActivity.setSystemUiVisibility(visibility: Int) {
-    window.decorView.systemUiVisibility = visibility
-}
 
 /**
  * 方便获取ViewDataBinding

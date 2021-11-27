@@ -2,6 +2,7 @@ package dev.hitools.common.app.mvvm.viewmodel
 
 import android.app.Application
 import android.content.Context
+import android.util.Log
 import androidx.annotation.StringRes
 import androidx.lifecycle.*
 import dev.hitools.common.entries.status.Empty
@@ -14,7 +15,7 @@ import dev.hitools.common.utils.StringUtils
 import dev.hitools.common.utils.databinding.bus.Event
 import kotlinx.coroutines.cancel
 
-abstract class BaseViewModel(application: Application) : AndroidViewModel(application), LifecycleObserver {
+abstract class BaseViewModel(application: Application) : AndroidViewModel(application), LifecycleEventObserver {
 
     /**
      * 注意这里用的是ApplicationContext
@@ -58,27 +59,34 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
      */
     open fun init() {}
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
+    override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
+        when (event) {
+            Lifecycle.Event.ON_CREATE -> onCreate()
+            Lifecycle.Event.ON_RESUME -> onResume()
+            Lifecycle.Event.ON_START -> onStart()
+            Lifecycle.Event.ON_PAUSE -> onPause()
+            Lifecycle.Event.ON_STOP -> onStop()
+            Lifecycle.Event.ON_DESTROY -> onDestroy()
+            else -> Log.d(TAG, "on other lifecycle event $event")
+
+        }
+    }
+
     protected open fun onCreate() {
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     protected open fun onResume() {
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_START)
     protected open fun onStart() {
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
     protected open fun onPause() {
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     protected open fun onStop() {
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     protected open fun onDestroy() {
         viewModelScope.cancel()
     }
@@ -191,5 +199,8 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
         toast(context.getString(message))
     }
 
+    companion object {
+        private const val TAG = "BaseViewModel"
+    }
 
 }
